@@ -24,6 +24,14 @@ import com.dominichenko.pet.gwt.phys2d.client.math.EventedVector2;
 import com.dominichenko.pet.gwt.phys2d.client.math.Vector2Handler;
 import com.dominichenko.pet.gwt.phys2d.client.utils.VectorTools;
 
+/**
+ * Common abstract class for any sprite in game.<br/>
+ * This class implements almost all needed functionality defined in interface {@link Sprite},
+ * and is prepared to be completely drawable for game scene.
+ * All you need to do - to customize it. 
+ * 
+ * @author <a href="mailto:max@dominichenko.com">Maxim Dominichenko</a>
+ */
 public abstract class AbstractSprite implements Sprite {
 
 	private GameScene gameScene;
@@ -48,6 +56,12 @@ public abstract class AbstractSprite implements Sprite {
 		}
 	}
 	
+	/**
+	 * Default empty constructor.
+	 * Don't use it directly in your code, but if you have to, then
+	 * use {@link #setGameScene(GameScene)} method to place sprite into gameplay.
+	 * @see #AbstractSprite(GameScene)
+	 */
 	public AbstractSprite() {
 		position = new EventedVector2();
 		position.addEventHandler(new SpritePositionVector2Handler());
@@ -55,6 +69,10 @@ public abstract class AbstractSprite implements Sprite {
 		collidePolygon = new Polygon();
 	}
 
+	/**
+	 * Constructs sprite instance and pushes it into game scene
+	 * @param gameScene {@link GameScene} object instance this sprite should belong to
+	 */
 	public AbstractSprite(GameScene gameScene) {
 		this();
 		this.gameScene = gameScene;
@@ -62,11 +80,20 @@ public abstract class AbstractSprite implements Sprite {
 			this.gameScene.getSprites().add(this);
 	}
 
+	/**
+	 * Gets game scene associated with this sprite instance.
+	 * @return {@link GameScene} object instance this sprite belongs to
+	 */
 	public GameScene getGameScene() {
 		return gameScene;
 	}
 
+	/**
+	 * Sets game scene associated with this sprite instance.
+	 * @param gameScene {@link GameScene} object instance this sprite should belong to
+	 */
 	public void setGameScene(GameScene gameScene) {
+		//FIXME: define right behavior (adding/removing into game scene).
 		this.gameScene = gameScene;
 	}
 	
@@ -75,6 +102,10 @@ public abstract class AbstractSprite implements Sprite {
 		return visible;
 	}
 
+	/**
+	 * Sets sprite visibility property.
+	 * @param visible {@code true} if sprite should be drawn. {@code false} otherwise.
+	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
@@ -94,20 +125,32 @@ public abstract class AbstractSprite implements Sprite {
 		return weight;
 	}
 
+	/**
+	 * Sets property that holds information about sprite's weight (if any).
+	 * It is used to compute sprite's animation with physics.
+	 * @param weight Conventional weight of sprite - units depend on game.
+	 */
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
+	@Override
 	public double getElasticity() {
 		return elasticity;
 	}
 
+	/**
+	 * Sets property that holds information about sprite's elasticity.<br/>
+	 * {@code 0} is completely inelastic (lump of clay) and {@code 1} is purely elastic (superball).
+	 * @param elasticity Value of sprite elasticity.
+	 */
 	public void setElasticity(double elasticity) {
 		if (elasticity < 0.0) elasticity = 0.0;
 		else if (elasticity > 1.0) elasticity = 1.0;
 		this.elasticity = elasticity;
 	}
 
+	@Override
 	public Polygon getCollidePolygon() {
 		return collidePolygon;
 	}
@@ -116,7 +159,12 @@ public abstract class AbstractSprite implements Sprite {
 	public boolean isCollidable() {
 		return collidable && collidePolygon.isCollidable() && Math.abs(weight) > VectorTools.EPSILON;
 	}
-	
+
+	/**
+	 * Sets property whether this sprite may collide with others or not.
+	 * @param collidable {@code true} if sprite may collide with others and with world boundary. 
+	 *          {@code false} otherwise.
+	 */
 	public void setCollidable(boolean collidable) {
 		this.collidable = collidable;
 	}
@@ -149,8 +197,7 @@ public abstract class AbstractSprite implements Sprite {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (collidable ? 1231 : 1237);
-		result = prime * result
-				+ ((collidePolygon == null) ? 0 : collidePolygon.hashCode());
+		result = prime * result + ((collidePolygon == null) ? 0 : collidePolygon.hashCode());
 		long temp;
 		temp = new Double(elasticity * 1000).longValue();
 		result = prime * result + (int) (temp ^ (temp >>> 32));

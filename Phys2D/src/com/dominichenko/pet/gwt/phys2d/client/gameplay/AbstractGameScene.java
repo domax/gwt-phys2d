@@ -31,6 +31,14 @@ import com.dominichenko.pet.gwt.phys2d.client.gameplay.sprites.SpriteInitCallbac
 import com.dominichenko.pet.gwt.phys2d.client.utils.Messenger;
 import com.google.gwt.user.client.ui.Panel;
 
+/**
+ * Holds all resources to compute and draw game scene.<br/>
+ * This class is abstract, though it doesn't have abstract methods
+ * - it's because common game scene is empty by default, 
+ * you have to setup it by creating your custom game scene with all needed stuff.
+ * 
+ * @author <a href="mailto:max@dominichenko.com">Maxim Dominichenko</a>
+ */
 public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 	
 	private Panel panel;
@@ -40,13 +48,19 @@ public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 	private CollisionDetector collisionDetector;
 	private Polygon bounds;
 
+	/**
+	 * Game scene constructor - prepares all needed resources and links game scene
+	 * with canvas pane on HTML page.
+	 * 
+	 * @param panel GWT {@link Panel} instance where to will be rendered game screen
+	 */
 	public AbstractGameScene(Panel panel) {
 		this.panel = panel;
 		surface = new Surface(getWidth(), getHeight());
 		shapeRenderer = new DirectShapeRenderer(surface);
 		sprites = new ArrayList<Sprite>();
 		bounds = new Polygon();
-//		this.setDesiredFps(20);
+//		setDesiredFps(20);
 	}
 
 	@Override
@@ -59,14 +73,27 @@ public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 		return panel.getOffsetHeight();
 	}
 	
+	/**
+	 * Gets G2D {@link Surface} instance that is used as canvas for drawing game screen
+	 * @return A {@link Surface} instance object
+	 * @see #getRenderer()
+	 */
 	public Surface getSurface() {
 		return surface;
 	}
-	
+
+	/**
+	 * Gets G2D {@link DirectShapeRenderer} instance that is used as renderer for drawing game screen
+	 * @return A {@link DirectShapeRenderer} instance object
+	 * @see #getSurface()
+	 */
 	public DirectShapeRenderer getRenderer() {
 		return shapeRenderer;
 	}
-	
+
+	/**
+	 * Initializes screen drawing surface and starts loop for rendering frames.
+	 */
 	@Override
 	public void start() {
 		panel.clear();
@@ -115,14 +142,35 @@ public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 		return collisionDetector;
 	}
 
+	/**
+	 * Defines instance of effective collision detector.
+	 * @param collisionDetector An object instance of {@link CollisionDetector} interface
+	 */
 	public void setCollisionDetector(CollisionDetector collisionDetector) {
 		this.collisionDetector = collisionDetector;
 	}
 
+	/**
+	 * Draws background for each frame.
+	 * Default action is filling frame by black color.<br/>
+	 * Override this method to define your own beautiful background.
+	 */
 	public void drawBackground() {
 		surface.clear().fillBackground(KnownColor.BLACK);
 	}
 	
+	/**
+	 * Updates game model for current frame and forces redraw game screen.<br/>
+	 * All gameplay computations should be included here.<br/>
+	 * This method does by default following:
+	 * <ol>
+	 * <li>performs collision detection (if collision detector is defined);</li>
+	 * <li>then calls method {@link Sprite#update()} for each sprite in scene;</li>
+	 * <li>then clears game screen background with method {@link #drawBackground()};</li>
+	 * <li>finally calls method {@link Sprite#draw()} for each visible sprite;</li>
+	 * </ol>
+	 * As a rule you don't need to fully override this method - just to extend it somehow. 
+	 */
 	@Override
 	public void update() {
 		if (collisionDetector != null)
@@ -132,6 +180,7 @@ public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 			sprite.update();
 		
 		drawBackground();
+		//FIXME: add computation of sprites visibility 
 		for (Sprite sprite : sprites)
 			if (sprite.isVisible())
 				sprite.draw();

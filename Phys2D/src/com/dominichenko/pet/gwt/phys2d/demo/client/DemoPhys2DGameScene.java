@@ -60,6 +60,7 @@ public class DemoPhys2DGameScene extends AbstractGameScene implements CollisionH
 	@Override
 	public void update() {
 		//FIXME: define a rule - which sprites are affected by gravity
+		//TODO: move gravity support into AbstractGameScene
 		for (Sprite sprite : getSprites())
 			sprite.getVelocity().mutableAdd(gravity);
 		super.update();
@@ -85,6 +86,6 @@ public class DemoPhys2DGameScene extends AbstractGameScene implements CollisionH
 					-Math.random() * 100);
 			sprite.setColor(colors[(int) Math.round((Math.random() * (colors.length - 1)))]);
 		}
-		getCollisionDetector().setAccuracy(number / 4);		
+		getCollisionDetector().setAccuracy(number / 4);
 	}
 }
