@@ -164,7 +164,7 @@ public abstract class AbstractCollisionDetector implements CollisionDetector {
 	 * @param sprite {@link Sprite} object we want to obtain collided edges for.
 	 * @return non-empty list with edges if sprite collided world bounds. {@code null} otherwise.
 	 * @see #testForCollisions(List, GameScene)
-	 * @see #putCollidedEdge(Sprite)
+	 * @see #putCollidedEdge(Sprite, Line)
 	 */
 	public List<Line> getCollidedEdges(Sprite sprite) {
 		return spriteToBoundsMap.get(sprite);

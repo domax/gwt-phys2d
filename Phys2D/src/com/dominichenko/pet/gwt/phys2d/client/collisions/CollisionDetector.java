@@ -46,7 +46,7 @@ public interface CollisionDetector {
 	 * (position, velocity, weight, shape, etc) when two sprites collide with each other.<br/>
 	 * Since it's completely gameplay's business to decide whether change sprite
 	 * properties or not, this method should be invoked (if any) from collision handler's
-	 * event {@link CollisionHandler#onCollide(Sprite, Sprite)}
+	 * event {@link CollisionHandler#onCollide(CollisionDetector, Sprite, Sprite)}
 	 * registered by {@link #addCollisionHandler(CollisionHandler)}.
 	 * 
 	 * @param sprite1 First sprite that collided with second one.
@@ -59,7 +59,7 @@ public interface CollisionDetector {
 	 * (position, velocity, weight, shape, etc) when sprite reaches world bounds.<br/>
 	 * Since it's completely gameplay's business to decide whether change sprite
 	 * properties or not, this method should be invoked (if any) from collision handler's
-	 * event {@link CollisionHandler#onBeyondWorld(List)}
+	 * event {@link CollisionHandler#onBeyondWorld(CollisionDetector, List)}
 	 * registered by {@link #addCollisionHandler(CollisionHandler)}.
 	 * 
 	 * @param sprite sprite that collided with world bounds.

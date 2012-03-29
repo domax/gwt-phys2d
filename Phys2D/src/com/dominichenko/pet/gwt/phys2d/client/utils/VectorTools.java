@@ -227,7 +227,7 @@ public class VectorTools {
 	 * The formula that is used to round values is following:
 	 * <pre><code>newValue = Math.round(oldValue * precision) / precision</code></pre>
 	 * 
-	 * @param line A {@link line} instance that should be rounded
+	 * @param line A {@link Line} instance that should be rounded
 	 * @param precision A value that must be greater than 0 and multiple of 10
 	 * @return A new line with rounded properties
 	 * @throws IllegalArgumentException Precision must be greater than 0 and multiple of 10
@@ -242,7 +242,7 @@ public class VectorTools {
 	 * The formula that is used to round values is following:
 	 * <pre><code>newValue = Math.round(oldValue * precision) / precision</code></pre>
 	 * 
-	 * @param line A {@link line} instance that should be rounded
+	 * @param line A {@link Line} instance that should be rounded
 	 * @param precision A value that must be greater than 0 and multiple of 10
 	 * @return A specified line with rounded coordinates
 	 * @throws IllegalArgumentException Precision must be greater than 0 and multiple of 10

@@ -139,7 +139,7 @@ public class Polygon {
 	/**
 	 * Gets a circle that is best fits to cover all the vertices in polygon.
 	 * 
-	 * @return An auto-computed {@link Circle} instance. A {@link NO_CIRCLE} if proper circle cannot be computed.  
+	 * @return An auto-computed {@link Circle} instance. A {@link #NO_CIRCLE} if proper circle cannot be computed.  
 	 */
 	public Circle getBestFitCircle() {
 		if (bestFitCircle == null)

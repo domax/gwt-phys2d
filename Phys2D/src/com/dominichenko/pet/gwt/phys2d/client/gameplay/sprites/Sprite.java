@@ -97,7 +97,7 @@ public interface Sprite {
 	/**
 	 * Defines conventional polygon that is used to compute sprite collisions.
 	 * 
-	 * @return
+	 * @return A {@link Polygon} object instance that describes sprite bounds for collision detection
 	 * @see #update()
 	 * @see Polygon
 	 * @see com.dominichenko.pet.gwt.phys2d.client.collisions.CollisionDetector
