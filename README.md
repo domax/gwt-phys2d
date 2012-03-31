@@ -5,7 +5,7 @@ Forewords
 ---------
 
 This project was created JFF to try and play with different GWT technolodies - 
-like e.g. HTML5 canvas and UiBinder - and train myself in:
+like e.g. HTML5 canvas and UiBinder - and train myself in the following:
 
 *   TDD development - it's easy to read and think about TDD, 
     but quite difficult to live with it w/o a habit.
@@ -20,7 +20,7 @@ games.
 Project Structure
 -----------------
 
-As I mentioned before, this project is Eclipse-related - it meand just that
+As I mentioned before, this project is Eclipse-related - it means just that
 I used project structure as it was proposed by Eclipse, but I tried to
 avoid commiting any things that has some specific information from my
 computer (full paths, libs that provided by Eclipse and so on), so this
@@ -59,15 +59,15 @@ supported by Phys2D, so you can see how it looks like.
 
 Also, I said about TDD - so all the most important code is covered by 
 unit tests. I'm consciously avoiding GWTTestCase - my experience shows
-that GWT is quite mature already, so it's safe now to nake UT just for
+that GWT is quite mature already, so it's safe now to make UT just for
 java classes.
 Though, I keep in mind several differences betweeen Java and Javascript
-- e.g. in regexp computations - but it's rare and very specific cases.
+- e.g. in regexp computations - but it's rare and very specific case.
  
 ### Javadocs ###
 
-I'm trying to describe everithing more or less important in Javadocs, so
-if you'll generate documantation, you have good description of all project
+I'm trying to describe everything that is more or less important by Javadocs, 
+so if you'll generate documantation, you have good description of all project
 stuff.
 
 _Of course, that build script will include Javadoc generating also._
