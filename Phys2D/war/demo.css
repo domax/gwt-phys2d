@@ -1,52 +1,14 @@
 /** Add css rules here for your application. */
 
-#__gwt_historyFrame {
-	position: absolute;
-	width: 0;
-	height: 0;
-	border: 0;
-}
-
-#__gwt_noScript {
-	width: 22em;
-	position: absolute;
-	left: 50%;
-	margin-left: -11em;
-	color: red;
-	background-color: white;
-	border: 1px solid red;
-	padding: 4px;
-	font-family: sans-serif;
-}
-
 .gwt-DialogBox {
   width: 400px;
 }
 
-#canvasContainer {
-	width: 400px;
-	height: 600px;
+.buttonPane {
+	white-space: nowrap;
 }
 
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 10px;
-  text-align: left;
-}
-
-/** Most GWT widgets already have a style name defined */
-.dialogVPanel {
-  margin: 5px;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
-}
-
-.sendButton {
-	margin: 0px 15px 0px 0px !important;
+.buttonPane .gwt-Button {
+	font-weight: bold;
+	margin: 0 5px;
 }

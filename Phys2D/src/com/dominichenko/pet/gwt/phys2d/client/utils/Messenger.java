@@ -15,13 +15,9 @@
  */
 package com.dominichenko.pet.gwt.phys2d.client.utils;
 
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * Class that implements message box.<br/>
@@ -42,11 +38,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * 
  * @author <a href="mailto:max@dominichenko.com">Maxim Dominichenko</a>
  */
+//TODO: extend this class for confirm box
 public class Messenger {
 	
 	private DialogBox dialogBox;
-	private HTML content;
-	private Button closeButton;
+	private MessengerPane messengerPane;
 	private HandlerRegistration closeHandlerRegistration;
 	private static Messenger instance = new Messenger();
 	
@@ -56,21 +52,8 @@ public class Messenger {
 	public Messenger() {
 		dialogBox = new DialogBox();
 		dialogBox.setAnimationEnabled(true);
-		closeButton = new Button("Close");
-		closeButton.getElement().setId("closeButton");
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		content = new HTML();
-		dialogVPanel.add(content);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
-		closeButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-			}
-		});
+		messengerPane = new MessengerPane(dialogBox);
+		dialogBox.add(messengerPane);
 	}
 	
 	/**
@@ -85,13 +68,14 @@ public class Messenger {
 	 */
 	public void sayThat(String title, String content, ClickHandler closeClickHandler) {
 		dialogBox.setText(title);
-		this.content.setHTML(content);
+		messengerPane.content.setHTML(content);
+		
 		if (closeHandlerRegistration != null) {
 			closeHandlerRegistration.removeHandler();
 			closeHandlerRegistration = null;
 		}
 		if (closeClickHandler != null)
-			closeHandlerRegistration = closeButton.addClickHandler(closeClickHandler);
+			closeHandlerRegistration = messengerPane.closeButton.addClickHandler(closeClickHandler);
 		dialogBox.center();
 	}
 

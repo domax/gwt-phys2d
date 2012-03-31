@@ -43,8 +43,15 @@ public class DemoPhys2DApp implements EntryPoint {
 	public DemoPhys2DApp() {
 		instance = this;
 	}
-	
-	public DemoPhys2DApp getApp() {
+
+	/**
+	 * Gets an instance of application.<br/>
+	 * Well, it's not classical singleton, but it's simple and enough for
+	 * regular needs.
+	 * 
+	 * @return An instance of current {@link DemoPhys2DApp} application. 
+	 */
+	public static DemoPhys2DApp getApp() {
 		return instance;
 	}
 	
@@ -52,51 +59,42 @@ public class DemoPhys2DApp implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		gameScene = new DemoPhys2DGameScene();
-		
-		final Button sendButton = new Button("Score");
-		sendButton.addStyleName("sendButton");
-		sendButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				communicator.getTopScore(10, new AsyncCallback<ScoreItem[]>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						GWT.log(DemoPhys2DApp.class.getName() + "#addClickHandler", caught);
-						Messenger.say("Error", "<span style='color: red;'>" + caught.getMessage() + "</span>");
-					}
+//		final Button sendButton = new Button("Score");
+//		sendButton.addStyleName("sendButton");
+//		sendButton.addClickHandler(new ClickHandler() {
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				communicator.getTopScore(10, new AsyncCallback<ScoreItem[]>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						GWT.log(DemoPhys2DApp.class.getName() + "#addClickHandler", caught);
+//						Messenger.say("Error", "<span style='color: red;'>" + caught.getMessage() + "</span>");
+//					}
+//
+//					@Override
+//					public void onSuccess(ScoreItem[] result) {
+//						GWT.log(DemoPhys2DApp.class.getName() + "#addClickHandler: " + Arrays.toString(result));
+//						Messenger.say("Score Board", Arrays.toString(result));
+//					}
+//				});
+//			}
+//		});
+//		RootPanel.get("buttonContainer").add(sendButton);
+//		
+		DemoPane demoPane = new DemoPane();
+		RootPanel.get().add(demoPane);
 
-					@Override
-					public void onSuccess(ScoreItem[] result) {
-						GWT.log(DemoPhys2DApp.class.getName() + "#addClickHandler: " + Arrays.toString(result));
-						Messenger.say("Score Board", Arrays.toString(result));
-					}
-				});
-			}
-		});
-		RootPanel.get("buttonContainer").add(sendButton);
-		
-		final Button pauseButton = new Button("Pause");
-		pauseButton.addStyleName("sendButton");
-		pauseButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				gameScene.cancel();
-			}
-		});
-		RootPanel.get("buttonContainer").add(pauseButton);
-		
-		final Button resumeButton = new Button("Resume");
-		resumeButton.addStyleName("sendButton");
-		resumeButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				gameScene.start();
-			}
-		});
-		RootPanel.get("buttonContainer").add(resumeButton);
-		
+		gameScene = new DemoPhys2DGameScene(demoPane.collisionContainer);
 		gameScene.start();
+	}
+
+	public CommunicatorAsync getCommunicator() {
+		return communicator;
+	}
+
+	public DemoPhys2DGameScene getGameScene() {
+		return gameScene;
 	}
 }

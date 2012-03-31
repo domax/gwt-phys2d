@@ -27,15 +27,16 @@ import com.dominichenko.pet.gwt.phys2d.client.collisions.CollisionDetector;
 import com.dominichenko.pet.gwt.phys2d.client.collisions.CollisionHandler;
 import com.dominichenko.pet.gwt.phys2d.client.gameplay.AbstractGameScene;
 import com.dominichenko.pet.gwt.phys2d.client.gameplay.sprites.Sprite;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Panel;
 
 public class DemoPhys2DGameScene extends AbstractGameScene implements CollisionHandler {
 	
 	private static final Vector2 gravity = new Vector2(0, 9.8);
 	private static final Color bgColor = new Color(190, 190, 190);
+	private static final int BALL_AMOUNT = 20;
 
-	public DemoPhys2DGameScene() {
-		super(RootPanel.get("canvasContainer"));
+	public DemoPhys2DGameScene(Panel panel) {
+		super(panel);
 		setCollisionDetector(new CircleCollisionDetector());
 		getCollisionDetector().addCollisionHandler(this);
 		this.getBounds().addVertices(
@@ -43,7 +44,7 @@ public class DemoPhys2DGameScene extends AbstractGameScene implements CollisionH
 				new Vector2(getWidth(), 0),
 				new Vector2(getWidth(), getHeight()),
 				new Vector2(0, getHeight()));
-		createBalls(20);
+		createBalls(BALL_AMOUNT);
 	}
 
 	@Override
@@ -87,5 +88,12 @@ public class DemoPhys2DGameScene extends AbstractGameScene implements CollisionH
 			sprite.setColor(colors[(int) Math.round((Math.random() * (colors.length - 1)))]);
 		}
 		getCollisionDetector().setAccuracy(number / 4);
+	}
+	
+	public void reset() {
+		cancel();
+		getSprites().clear();
+		createBalls(BALL_AMOUNT);
+		start();
 	}
 }

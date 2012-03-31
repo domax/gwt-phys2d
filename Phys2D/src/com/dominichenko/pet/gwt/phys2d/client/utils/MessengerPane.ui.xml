@@ -1,0 +1,40 @@
+<!--
+ * Copyright 2011-2012 Maxim Dominichenko
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+-->
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<ui:style>
+		.dialogVPanel {
+			margin: 5px;
+		}
+		
+		.htmlContent {
+			margin-bottom: 10px;
+		}
+	</ui:style>
+	
+	<g:VerticalPanel horizontalAlignment="ALIGN_LEFT" ui:field="dialogVPanel" styleName="{style.dialogVPanel}">
+		<g:Cell height="100%" width="100%">
+			<g:HTML wordWrap="true" height="100%" width="100%" ui:field="content" styleName="{style.htmlContent}"/>
+		</g:Cell>
+		<g:Cell horizontalAlignment="ALIGN_CENTER">
+			<g:Button ui:field="closeButton" >Close</g:Button>
+		</g:Cell>
+	</g:VerticalPanel>
+	
+</ui:UiBinder> 
