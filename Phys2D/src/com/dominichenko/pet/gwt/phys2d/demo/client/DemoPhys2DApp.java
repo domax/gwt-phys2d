@@ -15,19 +15,10 @@
  */
 package com.dominichenko.pet.gwt.phys2d.demo.client;
 
-import java.util.Arrays;
-
 import com.dominichenko.pet.gwt.phys2d.client.services.CommunicatorAsync;
 import com.dominichenko.pet.gwt.phys2d.client.services.JSONCommunicator;
-import com.dominichenko.pet.gwt.phys2d.client.utils.Messenger;
-import com.dominichenko.pet.gwt.phys2d.shared.ScoreItem;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -36,9 +27,9 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class DemoPhys2DApp implements EntryPoint {
 
-	private final CommunicatorAsync communicator = JSONCommunicator.getInstance();
-	private DemoPhys2DGameScene gameScene;
 	private static DemoPhys2DApp instance;
+	private final CommunicatorAsync communicator = JSONCommunicator.getInstance();
+	private DemoPane demoPane;
 
 	public DemoPhys2DApp() {
 		instance = this;
@@ -59,42 +50,15 @@ public class DemoPhys2DApp implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-
-//		final Button sendButton = new Button("Score");
-//		sendButton.addStyleName("sendButton");
-//		sendButton.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				communicator.getTopScore(10, new AsyncCallback<ScoreItem[]>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						GWT.log(DemoPhys2DApp.class.getName() + "#addClickHandler", caught);
-//						Messenger.say("Error", "<span style='color: red;'>" + caught.getMessage() + "</span>");
-//					}
-//
-//					@Override
-//					public void onSuccess(ScoreItem[] result) {
-//						GWT.log(DemoPhys2DApp.class.getName() + "#addClickHandler: " + Arrays.toString(result));
-//						Messenger.say("Score Board", Arrays.toString(result));
-//					}
-//				});
-//			}
-//		});
-//		RootPanel.get("buttonContainer").add(sendButton);
-//		
-		DemoPane demoPane = new DemoPane();
-		RootPanel.get().add(demoPane);
-
-		gameScene = new DemoPhys2DGameScene(demoPane.collisionContainer);
-		gameScene.start();
+		demoPane = new DemoPane();
+		RootLayoutPanel.get().add(demoPane);
 	}
 
 	public CommunicatorAsync getCommunicator() {
 		return communicator;
 	}
-
-	public DemoPhys2DGameScene getGameScene() {
-		return gameScene;
+	
+	public DemoPane getDemoPane() {
+		return demoPane;
 	}
 }

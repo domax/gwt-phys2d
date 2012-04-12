@@ -29,15 +29,21 @@ project should be fixed a little bit before you can use it.
 Just do following after you import checkouted sources:
 
 1.  If you see an error: 
-    "The GWT SDK JAR gwt-servlet.jar is missing in the WEB-INF/lib directory"
+    *"The GWT SDK JAR gwt-servlet.jar is missing in the WEB-INF/lib directory"*
     then simply right-click on it and select "Quick Fix" command,
     then allow Eclipse to copy this library into proper place.
+
+2.  If you see warnings, like that: *"The following classpath entry
+    '.../gwt-phys2d/Phys2D/lib/gwt-validation-2.0.jar' will not be available on
+    the server's classpath"*, then do like in previous section - select
+    "Quick Fix" and copy corresponding library to WEB-INF/lib.
     
-2.  If you see warnings, like that:
-    "The following classpath entry '.../gwt-phys2d/Phys2D/lib/easymock-3.1.jar'
-    will not be available on the server's classpath", then open project's
-    properties, select there "Google/Web Application" and add there for warning
-    suppressing all the jar files that are mentioned in Markers view.
+3.  Just one library shouldn't be copied to WEB-INF/lib - 
+    it is easymock-3.1.jar. Though, if it will be copied there, it's OK.
+    But it'd be better simply ignore warning this way: 
+    open project's properties, select there "Google/Web Application"
+    and add there for warning suppressing all the jar files that are mentioned
+    in Markers view (now it is only easymock-3.1.jar).
 
 Then use this stuff for your needs.
 
@@ -48,7 +54,7 @@ that has a name Phys2D (well actually full name is
 `com.dominichenko.pet.gwt.phys2d.Phys2D`).
 
 _I didn't yet created separate script to build JAR file for it, but I'll
-  do it ASAP._
+do it ASAP._
 
 ### Demo Application ###
 

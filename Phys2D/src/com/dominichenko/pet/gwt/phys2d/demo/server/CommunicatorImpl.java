@@ -17,6 +17,13 @@ package com.dominichenko.pet.gwt.phys2d.demo.server;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import com.dominichenko.pet.gwt.phys2d.client.services.Communicator;
 import com.dominichenko.pet.gwt.phys2d.shared.ScoreItem;
@@ -34,26 +41,50 @@ public class CommunicatorImpl extends RemoteServiceServlet implements Communicat
 	 * Static list will keep scores over all servlet instances across JM.
 	 */
 	private static ArrayList<ScoreItem> scoreItemList = new ArrayList<ScoreItem>();
+	private static Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private static ValidatorFactory validatorFactory =
+		Validation.byDefaultProvider().configure().buildValidatorFactory();
 
 	@Override
-	public ScoreItem[] getTopScore(Integer count) throws IllegalArgumentException {
-		int size = scoreItemList.size() > count ? count : scoreItemList.size();
+	public ScoreItem[] getTopScore(Integer start, Integer count) throws IllegalArgumentException {
+		if (start == null) start = 0;
+		if (count == null) count = 0;
+		int size = start + count < scoreItemList.size() ? count : scoreItemList.size() - start;
+		log.info("start=" + start + "; count=" + count + "; size=" + size + "; ");
+		if (size < 0) size = 0;
 		ScoreItem[] result = new ScoreItem[size];
-		for (int i = 0; i < result.length; i++)
-			result[i] = scoreItemList.get(i);
+		for (int i = 0; i < size; i++) {
+			result[i] = scoreItemList.get(i + start);
+			result[i].setPlace(i + start + 1);
+		}
 		return result;
 	}
 
 	@Override
 	public ScoreItem sendScoreItem(ScoreItem scoreItem) throws IllegalArgumentException {
 		if (scoreItem != null) {
-			scoreItem.setPlace(null);
-			scoreItemList.add(scoreItem);
-			Collections.sort(scoreItemList);
-			int i = scoreItemList.indexOf(scoreItem);
-			if (i >= 0)
-				scoreItem.setPlace(i + 1);
+			Validator validator = validatorFactory.getValidator();
+			Set<ConstraintViolation<ScoreItem>> violations = validator.validate(scoreItem);
+			if (violations.isEmpty()) {
+				scoreItem.setPlace(null);
+				scoreItemList.add(scoreItem);
+				Collections.sort(scoreItemList);
+				int i = scoreItemList.indexOf(scoreItem);
+				if (i >= 0)
+					scoreItem.setPlace(i + 1);
+			} else {
+				StringBuilder errors = new StringBuilder("Validation error(s) of ");
+				errors.append(scoreItem);
+				errors.append(":\n");
+				for (ConstraintViolation<ScoreItem> violation : violations) {
+					errors.append("- ");
+					errors.append(violation.getMessage());
+					errors.append("\n");
+				}
+				throw new IllegalArgumentException(errors.toString());
+			}
 		}
+		log.info(String.valueOf(scoreItem));
 		return scoreItem;
 	}
 }

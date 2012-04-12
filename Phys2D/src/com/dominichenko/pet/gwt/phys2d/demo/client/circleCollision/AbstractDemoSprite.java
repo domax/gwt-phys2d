@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.dominichenko.pet.gwt.phys2d.demo.client;
+package com.dominichenko.pet.gwt.phys2d.demo.client.circleCollision;
 
 import static com.dominichenko.pet.gwt.phys2d.client.utils.VectorTools.EPSILON;
 import gwt.g2d.client.graphics.Surface;
@@ -24,7 +24,7 @@ import com.dominichenko.pet.gwt.phys2d.client.gameplay.sprites.SpriteInitCallbac
 
 public abstract class AbstractDemoSprite extends AbstractSprite {
 
-	public AbstractDemoSprite(DemoPhys2DGameScene gameScene) {
+	public AbstractDemoSprite(CIrcleCollisionGameScene gameScene) {
 		super(gameScene);
 	}
 
@@ -32,8 +32,8 @@ public abstract class AbstractDemoSprite extends AbstractSprite {
 		return ((AbstractGameScene) getGameScene()).getSurface();
 	}
 
-	protected DemoPhys2DGameScene getScene() {
-		return (DemoPhys2DGameScene) getGameScene();
+	protected CIrcleCollisionGameScene getScene() {
+		return (CIrcleCollisionGameScene) getGameScene();
 	}
 	
 	@Override

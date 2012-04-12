@@ -48,8 +48,9 @@ public class JSONCommunicator implements CommunicatorAsync {
 	}
 
 	@Override
-	public void getTopScore(Integer count, AsyncCallback<ScoreItem[]> callback) throws IllegalArgumentException {
-		communicator.getTopScore(count, callback);
+	public void getTopScore(Integer start, Integer count, AsyncCallback<ScoreItem[]> callback)
+			throws IllegalArgumentException {
+		communicator.getTopScore(start, count, callback);
 	}
 
 	@Override

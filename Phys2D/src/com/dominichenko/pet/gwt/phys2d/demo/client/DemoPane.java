@@ -16,50 +16,41 @@
 package com.dominichenko.pet.gwt.phys2d.demo.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.HasSelectionHandlers;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.LayoutPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 
-public class DemoPane extends Composite {
+public class DemoPane extends Composite implements HasSelectionHandlers<Composite> {
+
+	@UiField TabLayoutPanel tabLayoutPanel;
 
 	private static DemoPaneUiBinder uiBinder = GWT.create(DemoPaneUiBinder.class);
 
-	@UiTemplate("DemoPane.ui.xml")
-	interface DemoPaneUiBinder extends UiBinder<VerticalPanel, DemoPane> {
+	interface DemoPaneUiBinder extends UiBinder<LayoutPanel, DemoPane> {
 	}
-	@UiField SimplePanel collisionContainer;
-	@UiField Button pauseBtn;
-	@UiField Button resumeBtn;
-	@UiField Button resetBtn;
 
 	public DemoPane() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	
-	@UiHandler("pauseBtn")
-	void onPauseBtnClick(ClickEvent event) {
-		DemoPhys2DApp.getApp().getGameScene().cancel();
-		pauseBtn.setVisible(false);
-		resumeBtn.setVisible(true);
-	}
 
-	@UiHandler("resumeBtn")
-	void onResumeBtnClick(ClickEvent event) {
-		DemoPhys2DApp.getApp().getGameScene().start();
-		pauseBtn.setVisible(true);
-		resumeBtn.setVisible(false);
+	@Override
+	public HandlerRegistration addSelectionHandler(SelectionHandler<Composite> handler) {
+		return addHandler(handler, SelectionEvent.getType());
 	}
 	
-	@UiHandler("resetBtn")
-	void onResetBtnClick(ClickEvent event) {
-		DemoPhys2DApp.getApp().getGameScene().reset();
-		pauseBtn.setVisible(true);
-		resumeBtn.setVisible(false);
+	@UiHandler("tabLayoutPanel")
+	void onTabLayoutPanelSelection(SelectionEvent<Integer> event) {
+		Composite widget = (Composite) tabLayoutPanel.getWidget(tabLayoutPanel.getSelectedIndex());
+		GWT.log("DemoPane.onTabLayoutPanelSelection(SelectionEvent): "
+				+ "selectedItem=" + event.getSelectedItem() + "; "
+				+ "widget=" + widget.getClass().getName());
+		SelectionEvent.fire(this, widget);
 	}
 }

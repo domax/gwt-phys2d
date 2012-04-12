@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.dominichenko.pet.gwt.phys2d.demo.client;
+package com.dominichenko.pet.gwt.phys2d.demo.client.circleCollision;
 
 import static gwt.g2d.client.graphics.KnownColor.*;
 import gwt.g2d.client.graphics.Color;
@@ -28,15 +28,15 @@ public class BallSprite extends AbstractDemoSprite {
 	private Color color;
 	private String name;
 
-	public BallSprite(DemoPhys2DGameScene gameScene, double radius) {
+	public BallSprite(CIrcleCollisionGameScene gameScene, double radius) {
 		this(gameScene, radius, GREEN_YELLOW, null);
 	}
 
-	public BallSprite(DemoPhys2DGameScene gameScene, double radius, Color color) {
+	public BallSprite(CIrcleCollisionGameScene gameScene, double radius, Color color) {
 		this(gameScene, radius, color, null);
 	}
 	
-	public BallSprite(DemoPhys2DGameScene gameScene, double radius, Color color, String name) {
+	public BallSprite(CIrcleCollisionGameScene gameScene, double radius, Color color, String name) {
 		super(gameScene);
 		this.getCollidePolygon().addVertices(new Vector2(radius, 0), new Vector2(-radius, 0));
 		this.color = color;

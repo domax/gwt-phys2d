@@ -3,9 +3,18 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" output="test-classes" path="test"/>
 	<classpathentry kind="lib" path="lib/gwt-g2d-v008.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-validation-2.0.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/easymock-3.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-r09.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/reflections-0.9.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/freemarker-2.3.19.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/javassist-3.12.1.GA.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -56,7 +56,7 @@ public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 	 */
 	public AbstractGameScene(Panel panel) {
 		this.panel = panel;
-		surface = new Surface(getWidth(), getHeight());
+		surface = new Surface(panel.getOffsetWidth(), panel.getOffsetHeight());
 		shapeRenderer = new DirectShapeRenderer(surface);
 		sprites = new ArrayList<Sprite>();
 		bounds = new Polygon();
@@ -65,12 +65,12 @@ public abstract class AbstractGameScene extends FpsTimer implements GameScene {
 
 	@Override
 	public int getWidth() {
-		return panel.getOffsetWidth();
+		return surface.getWidth();
 	}
 
 	@Override
 	public int getHeight() {
-		return panel.getOffsetHeight();
+		return surface.getHeight();
 	}
 	
 	/**

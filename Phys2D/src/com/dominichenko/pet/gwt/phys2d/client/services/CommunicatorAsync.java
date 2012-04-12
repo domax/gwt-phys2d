@@ -28,11 +28,12 @@ public interface CommunicatorAsync {
 
 	/**
 	 * This operation should request from server table with topmost successful results.
-	 * 
+	 *
+	 * @param start An offset from the beginning of list. Starts from 0.
 	 * @param count A maximal amount of results that should be returned by server.
 	 * @param callback A callback class that contains logic that processes array of {@link ScoreItem}s
 	 */
-	void getTopScore(Integer count, AsyncCallback<ScoreItem[]> callback);
+	void getTopScore(Integer start, Integer count, AsyncCallback<ScoreItem[]> callback);
 
 	/**
 	 * This operation should store on server specified score.

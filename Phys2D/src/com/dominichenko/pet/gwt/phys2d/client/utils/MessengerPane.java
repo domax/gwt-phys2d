@@ -28,11 +28,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class MessengerPane extends Composite {
 
-	private static MessengerPaneUiBinder uiBinder = GWT.create(MessengerPaneUiBinder.class);
 	private DialogBox dialogBox;
 	@UiField VerticalPanel dialogVPanel;
 	@UiField HTML content;
 	@UiField Button closeButton;
+	
+	private static MessengerPaneUiBinder uiBinder = GWT.create(MessengerPaneUiBinder.class);
 
 	interface MessengerPaneUiBinder extends UiBinder<VerticalPanel, MessengerPane> {
 	}

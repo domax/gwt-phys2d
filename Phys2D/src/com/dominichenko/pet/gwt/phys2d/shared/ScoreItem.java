@@ -18,9 +18,16 @@ package com.dominichenko.pet.gwt.phys2d.shared;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.*;
+
 /**
  * Serializable Java bean that is used to encapsulate information about player's
  * score achievement.
+ * <p>
+ * This bean supports JSR-303 specification (Bean Validation), that allows to provide
+ * validation of this class on client- or on server-side using absolutely the same approach
+ * and even the same code.
+ * </p>
  * 
  * @author <a href="mailto:max@dominichenko.com">Maxim Dominichenko</a>
  */
@@ -28,9 +35,19 @@ public class ScoreItem implements Serializable, Comparable<ScoreItem> {
 
 	private static final long serialVersionUID = 1337096705293261019L;
 
+	@NotNull(message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.name.NotNull.message}")
+	@Size(min = 1, max = 10, message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.name.Size.message}")
 	private String name;
+	
+	@NotNull(message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.date.NotNull.message}")
+	@Past(message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.date.Past.message}")
 	private Date date;
+	
+	@NotNull(message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.score.NotNull.message}")
+	@Min(value = 1, message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.score.Min.message}")
 	private Integer score;
+	
+	@Min(value = 1, message="{com.dominichenko.pet.gwt.phys2d.shared.ScoreItem.place.Min.message}")
 	private Integer place;
 
 	/**
@@ -44,6 +61,8 @@ public class ScoreItem implements Serializable, Comparable<ScoreItem> {
 	 * 
 	 * @param name
 	 *          Player's custom name.
+	 * @param date
+	 *          Date of player's score achievement.
 	 * @param score
 	 *          Player's score achievement.
 	 * @param place

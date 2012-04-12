@@ -1,8 +1,20 @@
 /** Add css rules here for your application. */
 
+/* body {
+	background-color: #CCCCCC !important;
+}*/
+
 .gwt-DialogBox {
   width: 400px;
 }
+
+/* .gwt-TabLayoutPanel {
+	margin: 5px;
+}
+
+.gwt-TabLayoutPanelContentContainer {
+	background-color: white;
+}*/
 
 .buttonPane {
 	white-space: nowrap;

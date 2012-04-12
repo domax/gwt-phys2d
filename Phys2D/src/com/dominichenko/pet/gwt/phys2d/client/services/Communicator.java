@@ -30,11 +30,12 @@ public interface Communicator extends RemoteService {
 	/**
 	 * This operation should request from server table with topmost successful results.
 	 * 
+	 * @param start An offset from the beginning of list. Starts from 0.
 	 * @param count A maximal amount of results that should be returned by server.
 	 * @return An array of {@link ScoreItem}s. Empty array if there are no results.
 	 * @throws IllegalArgumentException
 	 */
-	ScoreItem[] getTopScore(Integer count) throws IllegalArgumentException;
+	ScoreItem[] getTopScore(Integer start, Integer count) throws IllegalArgumentException;
 
 	/**
 	 * This operation should store on server specified score.

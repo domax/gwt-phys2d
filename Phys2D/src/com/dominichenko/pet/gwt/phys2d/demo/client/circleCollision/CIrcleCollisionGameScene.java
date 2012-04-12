@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.dominichenko.pet.gwt.phys2d.demo.client;
+package com.dominichenko.pet.gwt.phys2d.demo.client.circleCollision;
 
 import gwt.g2d.client.graphics.Color;
 import gwt.g2d.client.graphics.KnownColor;
@@ -29,13 +29,13 @@ import com.dominichenko.pet.gwt.phys2d.client.gameplay.AbstractGameScene;
 import com.dominichenko.pet.gwt.phys2d.client.gameplay.sprites.Sprite;
 import com.google.gwt.user.client.ui.Panel;
 
-public class DemoPhys2DGameScene extends AbstractGameScene implements CollisionHandler {
+public class CIrcleCollisionGameScene extends AbstractGameScene implements CollisionHandler {
 	
 	private static final Vector2 gravity = new Vector2(0, 9.8);
 	private static final Color bgColor = new Color(190, 190, 190);
 	private static final int BALL_AMOUNT = 20;
 
-	public DemoPhys2DGameScene(Panel panel) {
+	public CIrcleCollisionGameScene(Panel panel) {
 		super(panel);
 		setCollisionDetector(new CircleCollisionDetector());
 		getCollisionDetector().addCollisionHandler(this);
