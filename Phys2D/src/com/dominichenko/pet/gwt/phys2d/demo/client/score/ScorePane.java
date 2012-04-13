@@ -25,6 +25,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import com.dominichenko.pet.gwt.phys2d.client.utils.Messenger;
+import com.dominichenko.pet.gwt.phys2d.client.utils.Shutter;
 import com.dominichenko.pet.gwt.phys2d.client.utils.Utils;
 import com.dominichenko.pet.gwt.phys2d.demo.client.DemoPane;
 import com.dominichenko.pet.gwt.phys2d.demo.client.DemoPhys2DApp;
@@ -94,12 +95,14 @@ public class ScorePane extends Composite {
 			final Range range = display.getVisibleRange();
 			GWT.log("ScorePane$ScoreDataProvider.onRangeChanged(HasData): "
 					+ "start=" + range.getStart() + "; length=" + range.getLength());
+			Shutter.lock();
 			DemoPhys2DApp.getApp().getCommunicator().getTopScore(range.getStart(), range.getLength(),
 					new AsyncCallback<ScoreItem[]>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
 							GWT.log(caught.getMessage(), caught);
+							Shutter.unlock();
 							Messenger.say("Score Requesting Failed", "Server returned following error:<br/>" + caught.getMessage());
 						}
 
@@ -108,6 +111,7 @@ public class ScorePane extends Composite {
 							if (result == null || result.length == 0)
 								result = new ScoreItem[] {new ScoreItem("No data", null, null, null)};
 							updateRowData(range.getStart(), Arrays.asList(result));
+							Shutter.unlock();
 						}
 					});
 		}
@@ -150,8 +154,6 @@ public class ScorePane extends Composite {
 		table.addColumn(scoreColumn, "Score");
 		
 		pager.setDisplay(table);
-		scoreDataProvider = new ScoreDataProvider();
-		scoreDataProvider.addDataDisplay(table);
 	}
 	
 	/**
@@ -182,7 +184,9 @@ public class ScorePane extends Composite {
 							GWT.log("ScorePane/SelectionHandler.onSelection(SelectionEvent): selectedItem="
 									+ event.getSelectedItem().getClass().getName());
 							if (event.getSelectedItem() == ScorePane.this) {
-								table.redraw();
+//								table.redraw();
+								scoreDataProvider = new ScoreDataProvider();
+								scoreDataProvider.addDataDisplay(table);
 								firtsStartHR.removeHandler();
 							}
 						}
@@ -254,16 +258,19 @@ public class ScorePane extends Composite {
 	}
 	
 	private void sendScore(ScoreItem scoreItem) {
+		Shutter.lock();
 		DemoPhys2DApp.getApp().getCommunicator().sendScoreItem(scoreItem, new AsyncCallback<ScoreItem> () {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				Shutter.unlock();
 				Messenger.say("Sending Score Failed", caught.getMessage().replaceAll("\n", "<br/>"));
 			}
 
 			@Override
 			public void onSuccess(ScoreItem result) {
 				scoreDataProvider.onRangeChanged(table);
+				Shutter.unlock();
 			}
 		});
 	}

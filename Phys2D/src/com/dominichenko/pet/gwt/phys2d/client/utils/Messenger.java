@@ -52,6 +52,8 @@ public class Messenger {
 	public Messenger() {
 		dialogBox = new DialogBox();
 		dialogBox.setAnimationEnabled(true);
+		dialogBox.setGlassEnabled(true);
+		dialogBox.setModal(true);
 		messengerPane = new MessengerPane(dialogBox);
 		dialogBox.add(messengerPane);
 	}

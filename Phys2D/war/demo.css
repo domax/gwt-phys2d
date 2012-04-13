@@ -1,20 +1,8 @@
 /** Add css rules here for your application. */
 
-/* body {
-	background-color: #CCCCCC !important;
-}*/
-
 .gwt-DialogBox {
   width: 400px;
 }
-
-/* .gwt-TabLayoutPanel {
-	margin: 5px;
-}
-
-.gwt-TabLayoutPanelContentContainer {
-	background-color: white;
-}*/
 
 .buttonPane {
 	white-space: nowrap;
@@ -23,4 +11,28 @@
 .buttonPane .gwt-Button {
 	font-weight: bold;
 	margin: 0 5px;
+}
+
+.shutter {
+	width: 100px;
+	height: 50px;
+	
+	/* background: rgb(255, 255, 255) transparent; */
+	background: rgba(255, 255, 255, 0.8);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF, endColorstr=#CCFFFFFF);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CCFFFFFF, endColorstr=#CCFFFFFF)";
+	
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	behavior: url(border-radius.htc);
+	border-radius: 10px;
+	
+	padding: 5px;
+}
+
+.shutter div {
+	width: 100%;
+	text-align: center;
+	pading-top: 2px;
 }

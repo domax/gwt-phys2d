@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="GWT Phys2D Ant Build" basedir="." default="war">
 
+	<tstamp/>
+	
 	<property environment="env" />
 	<property name="gwt.home.dir" location="${env.GWT_HOME}" />
 	<property name="gwt.demo.name" value="com.dominichenko.pet.gwt.phys2d.demo.Demo" />
 	<property name="gwt.demo.dir" value="com/dominichenko/pet/gwt/phys2d/demo" />
-	<property name="jar.name" value="gwt-phys2d.jar" />
-	<property name="doc.name" value="gwt-phys2d-doc.zip" />
-	<property name="war.name" value="gwt-phys2d.war" />
+	<property name="jar.name" value="gwt-phys2d_${DSTAMP}.jar" />
+	<property name="doc.name" value="gwt-phys2d-doc_${DSTAMP}.zip" />
+	<property name="war.name" value="gwt-phys2d_${DSTAMP}.war" />
 	<property name="src.dir" location="src" />
 	<property name="test.dir" location="test" />
 	<property name="tmp.dir" location="tmp" />
@@ -112,8 +114,7 @@
 		</jar>
 	</target>
 
-	<!-- <target name="war" depends="gwt-compile, jar"> -->
-	<target name="war" depends="jar">
+	<target name="war" depends="gwt-compile, jar">
 		<war basedir="war" destfile="${dist.dir}/${war.name}" webxml="war/WEB-INF/web.xml">
 			<exclude name=".*" />
 			<exclude name="WEB-INF/**" />
