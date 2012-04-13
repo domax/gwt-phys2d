@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GWT Phys2D Ant Build" basedir="." default="war">
+
+	<property environment="env" />
+	<property name="gwt.home.dir" location="${env.GWT_HOME}" />
+	<property name="gwt.demo.name" value="com.dominichenko.pet.gwt.phys2d.demo.Demo" />
+	<property name="gwt.demo.dir" value="com/dominichenko/pet/gwt/phys2d/demo" />
+	<property name="jar.name" value="gwt-phys2d.jar" />
+	<property name="doc.name" value="gwt-phys2d-doc.zip" />
+	<property name="war.name" value="gwt-phys2d.war" />
+	<property name="src.dir" location="src" />
+	<property name="test.dir" location="test" />
+	<property name="tmp.dir" location="tmp" />
+	<property name="build.dir" location="${tmp.dir}/build" />
+	<property name="junit.dir" location="test-classes" />
+	<property name="jdoc.dir" location="${tmp.dir}/jdoc" />
+	<property name="dist.dir" location="dist" />
+	<property name="lib.dir" location="lib" />
+
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${gwt.home.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<macrodef name="gwt.compile">
+		<attribute name="module" default="default" />
+		<sequential>
+			<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+				<classpath>
+					<pathelement location="${src.dir}" />
+					<pathelement location="${build.dir}" />
+					<path refid="project.classpath" />
+				</classpath>
+				<jvmarg value="-Xmx256M" />
+				<arg value="@{module}" />
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${junit.dir}" />
+		<mkdir dir="${jdoc.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${tmp.dir}" />
+		<delete dir="${junit.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${build.dir}"
+			includeAntRuntime="false">
+			<classpath refid="project.classpath" />
+		</javac>
+		<javac srcdir="${test.dir}" destdir="${junit.dir}"
+			includeAntRuntime="false">
+			<classpath>
+				<pathelement location="${build.dir}" />
+				<path refid="project.classpath" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="gwt-compile" depends="compile">
+		<gwt.compile module="${gwt.demo.name}" />
+	</target>
+
+	<target name="junit" depends="compile">
+		<junit printSummary="yes" fork="yes" includeAntRuntime="true" showOutput="true">
+			<classpath>
+				<pathelement location="${build.dir}" />
+				<pathelement location="${junit.dir}" />
+				<path refid="project.classpath" />
+			</classpath>
+			<formatter type="plain" />
+			<test name="com.dominichenko.pet.gwt.phys2d.client.AllTests" haltOnFailure="yes" toDir="${tmp.dir}" />
+		</junit>
+	</target>
+
+	<target name="jdoc" depends="compile">
+		<javadoc destdir="${jdoc.dir}" author="true" version="true" use="true" windowtitle="GWT Phys2D">
+			<classpath refid="project.classpath" />
+
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<exclude name="${gwt.demo.dir}/**" />
+			</packageset>
+
+			<doctitle><![CDATA[<h1>GWT Phys2D</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2011-2012 Maxim Dominichenko. All Rights Reserved.</i>]]></bottom>
+			<link href="http://download.oracle.com/javase/6/docs/api/" />
+		</javadoc>
+		<zip destfile="${dist.dir}/${doc.name}">
+			<fileset dir="${jdoc.dir}"/>
+		</zip>
+	</target>
+
+	<target name="jar" depends="compile, junit">
+		<jar destfile="${dist.dir}/${jar.name}">
+			<fileset dir="${build.dir}">
+				<exclude name="${gwt.demo.dir}/**" />
+			</fileset>
+			<fileset dir="${src.dir}">
+				<exclude name="${gwt.demo.dir}/**" />
+			</fileset>
+		</jar>
+	</target>
+
+	<!-- <target name="war" depends="gwt-compile, jar"> -->
+	<target name="war" depends="jar">
+		<war basedir="war" destfile="${dist.dir}/${war.name}" webxml="war/WEB-INF/web.xml">
+			<exclude name=".*" />
+			<exclude name="WEB-INF/**" />
+			<lib dir="war/WEB-INF/lib">
+				<include name="*.jar" />
+			</lib>
+			<lib dir="${dist.dir}">
+				<include name="${jar.name}" />
+			</lib>
+			<lib dir="${gwt.home.dir}">
+				<include name="validation-api*.jar" />
+			</lib>
+			<classes dir="${build.dir}">
+				<include name="${gwt.demo.dir}/server/**" />
+			</classes>
+		</war>
+	</target>
+
+</project>

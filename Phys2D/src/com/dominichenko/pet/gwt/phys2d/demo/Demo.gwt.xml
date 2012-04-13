@@ -35,9 +35,9 @@
 	<entry-point class='com.dominichenko.pet.gwt.phys2d.demo.client.DemoPhys2DApp' />
 	
 	<!-- English language, independent of country -->
-	<extend-property name="locale" values="en"/>
+	<!-- <extend-property name="locale" values="en"/> -->
 	<!-- Default language -->
-	<set-property-fallback name="locale" value="en"/>
+	<!-- <set-property-fallback name="locale" value="en"/> -->
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * This is implementation if immutable {@link ArrayList}.</br>
+ * This is implementation of immutable {@link ArrayList}.</br>
  * It means that this class doesn't allow runtime list management: adding, removing, replacing elements.
  * Though, developer still has an ability to change particular elements themselves.
  * 

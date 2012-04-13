@@ -51,15 +51,23 @@ Then use this stuff for your needs.
 
 I placed all the engine-related functionality into separate GWT module 
 that has a name Phys2D (well actually full name is 
-`com.dominichenko.pet.gwt.phys2d.Phys2D`).
+`com.dominichenko.pet.gwt.phys2d.Phys2D`). This module is packed separately
+into JAR file and used in demo app (see below).
 
-_I didn't yet created separate script to build JAR file for it, but I'll
-do it ASAP._
+To build JAR with Phys2D module use following ant command:
+
+`ant clean jar`
 
 ### Demo Application ###
 
 This project also has demo app where I will gather all functionality
 supported by Phys2D, so you can see how it looks like.
+
+Working demo application is available here: [GWT Phys2D Demo](http://phys2d.jelastic.servint.net/).
+
+To build WAR with Phys2D demo application use following ant command:
+
+`ant clean war`
 
 ### Unit Tests ###
 
@@ -69,13 +77,20 @@ that GWT is quite mature already, so it's safe now to make UT just for
 java classes.
 Though, I keep in mind several differences betweeen Java and Javascript
 - e.g. in regexp computations - but it's rare and very specific case.
+
+Unit tests are invoked implicitly in ant build script when you
+build JAR file of Phys2D module. Thus, if you want to run them explicitly
+just use following ant command:
+
+`ant junit`
  
 ### Javadocs ###
 
 I'm trying to describe everything that is more or less important by Javadocs, 
-so if you'll generate documantation, you have good description of all project
+so if you'll generate documentation, you have good description of all project
 stuff.
 
-_Of course, that build script will include Javadoc generating also._
+To build ZIP archive with JDoc that will include reference for Phys2D module
+classes (no demo classes are included!) use following ant command:
 
-
+`ant jdoc`
